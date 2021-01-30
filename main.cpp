@@ -2,7 +2,7 @@
 #include "iostream"
 #include "stdlib.h"
 
-
+using namespace std;
 /* 기준을 잡아서, 기준 앞에는 오름차순, 기준 뒤에는 내림차순. */
 bool next_permutation(int *arr, int n)
 {
@@ -27,36 +27,25 @@ bool next_permutation(int *arr, int n)
     }
     return true;
 }
-void exec_1(int argc, char** argv)
+int main()
 {
-    int n = atoi(argv[1]);
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    int n;
+    scanf("%d", &n);
     int* arr = NULL;
     arr = (int*)malloc(sizeof(int)*n);
     for(int i = 0 ; i < n ; i++) arr[i] = i+1;
-
+    
     do
     {
         for(int i = 0 ; i < n ; i++)
-            printf("%d ",arr[i]);
-        printf("\r\n");
-    } while (next_permutation(arr,n));
-
-}
-int main(int argc, char** argv)
-{
-    int n = atoi(argv[1]);
-    int* arr = NULL;
-    arr = (int*)malloc(sizeof(int)*n);
-    for(int i = 0 ; i < n ; i++) arr[i] = i+1;
-
-    do
-    {
-        for(int i = 0 ; i < n ; i++)
-            printf("%d ",arr[i]);
-        printf("\r\n");
+            cout << arr[i] << " ";
+        cout << '\n'; //endl 쓰지말고 '\n' 쓸것. 시간 단축 
     } while (next_permutation(arr,n));
     
 
     return 0 ;
 }
+
 
