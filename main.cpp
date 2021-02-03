@@ -3,29 +3,42 @@
 #include "stdlib.h"
 
 using namespace std;
-/* 기준을 잡아서, 기준 앞에는 오름차순, 기준 뒤에는 내림차순. */
-bool next_permutation(int *arr, int n)
+/*
+https://www.acmicpc.net/problem/1904
+
+
+
+지원이에게 2진 수열을 가르쳐 주기 위해, 지원이 아버지는 그에게 타일들을 선물해주셨다. 그리고 이 각각의 타일들은 0 또는 1이 쓰여 있는 낱장의 타일들이다.
+
+어느 날 짓궂은 동주가 지원이의 공부를 방해하기 위해 0이 쓰여진 낱장의 타일들을 붙여서 한 쌍으로 이루어진 00 타일들을 만들었다. 결국 현재 1 하나만으로 이루어진 타일 또는 0타일을 두 개 붙인 한 쌍의 00타일들만이 남게 되었다.
+
+그러므로 지원이는 타일로 더 이상 크기가 N인 모든 2진 수열을 만들 수 없게 되었다. 예를 들어, N=1일 때 1만 만들 수 있고, N=2일 때는 00, 11을 만들 수 있다. (01, 10은 만들 수 없게 되었다.) 또한 N=4일 때는 0011, 0000, 1001, 1100, 1111 등 총 5개의 2진 수열을 만들 수 있다.
+
+우리의 목표는 N이 주어졌을 때 지원이가 만들 수 있는 모든 가짓수를 세는 것이다. 단 타일들은 무한히 많은 것으로 가정하자.
+
+입력
+첫 번째 줄에 자연수 N이 주어진다. (1 ≤ N ≤ 1,000,000)
+
+출력
+첫 번째 줄에 지원이가 만들 수 있는 길이가 N인 모든 2진 수열의 개수를 15746으로 나눈 나머지를 출력한다.
+
+예제 입력 1 
+4
+예제 출력 1 
+5
+
+1- 1 
+2- 00 11 
+3- 001 100 111 
+4- 0011, 0000, 1001, 1100, 1111
+5- 00001, 00100, 10000, 00111, 10011, 11001, 11100, 11111
+
+*/
+
+int pivonachi(int n )
 {
-    int i = n-1;
-    while(i > 0 && arr[i-1] >= arr[i]) --i; //Find Pivot
-    if(i == 0) return false;
-
-    int j = n-1;
-    while(arr[i-1] >= arr[j]) --j;
-
-    int tmp = arr[i-1];
-    arr[i-1] = arr[j];
-    arr[j] = tmp;
-    int k = n-1;
-    while(i < k)
-    {
-        tmp = arr[i];
-        arr[i] = arr[k];
-        arr[k] = tmp;
-        i++; 
-        k--;
-    }
-    return true;
+    if(n < 3 ) return n;
+    return pivonachi(n-1)+pivonachi(n-2);
 }
 int main()
 {
@@ -33,17 +46,15 @@ int main()
     cin.tie(NULL); 
     int n;
     scanf("%d", &n);
-    int* arr = NULL;
-    arr = (int*)malloc(sizeof(int)*n);
-    for(int i = 0 ; i < n ; i++) arr[i] = i+1;
-    
-    do
-    {
-        for(int i = 0 ; i < n ; i++)
-            cout << arr[i] << " ";
-        cout << '\n'; //endl 쓰지말고 '\n' 쓸것. 시간 단축 
-    } while (next_permutation(arr,n));
-    
+    if(n < 1 || n > 1000000) return -1;    
+    int arr[n];
+    for(int i = 1 ; i < n+1 ; i++)
+    {   
+        if(i < 3) arr[i-1] = i;
+        else arr[i-1] = arr[i-3]+arr[i-2];
+        arr[i-1] %= 15746; // 15746으로 나눈 나머지를 저장해야한다 ! 
+    }    
+    printf("%d\n",arr[n-1]%15746);
 
     return 0 ;
 }
