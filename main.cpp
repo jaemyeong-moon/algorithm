@@ -5,45 +5,53 @@
 using namespace std;
 /*
 
-https://www.acmicpc.net/problem/2839
+https://www.acmicpc.net/problem/15953
 
-상근이는 요즘 설탕공장에서 설탕을 배달하고 있다. 상근이는 지금 사탕가게에 설탕을 정확하게 N킬로그램을 배달해야 한다. 설탕공장에서 만드는 설탕은 봉지에 담겨져 있다. 봉지는 3킬로그램 봉지와 5킬로그램 봉지가 있다.
-
-상근이는 귀찮기 때문에, 최대한 적은 봉지를 들고 가려고 한다. 예를 들어, 18킬로그램 설탕을 배달해야 할 때, 3킬로그램 봉지 6개를 가져가도 되지만, 5킬로그램 3개와 3킬로그램 1개를 배달하면, 더 적은 개수의 봉지를 배달할 수 있다.
-
-상근이가 설탕을 정확하게 N킬로그램 배달해야 할 때, 봉지 몇 개를 가져가면 되는지 그 수를 구하는 프로그램을 작성하시오.
+카카오 페스티벌 예선 문제 1
 */
-int a;
-
-int calculate(int v)
+int _2017[100] = {0,5000000,3000000,2000000,500000,300000,100000};
+int _2018[100] = {0,5120000,2560000,1280000,640000,320000};
+int result[1000] = {0,};
+int a,b;
+int pow(int a, int b)
 {
-    if(v < 3 || v > 5000) {
-       
-       return -1;
-   }
-   //3a + 5b = v
-   //b가 가장 큰 경우를 구하라.
-   int start = v / 5;
-   int left;
-   int i; // 5키로짜리 갯수
-   for(i = start ; i > -1 ; i-- )
-   {
-       left = v - 5*i;
-       if(left % 3 == 0 ) break;
-   }
-   if(i < 0 ) return i;
-   return i + (left/3);
-
-
+    if(b == 0) return 1;
+    return a*pow(a,b-1);
 }
 int main()
 {   
     ios_base::sync_with_stdio(false); 
     cin.tie(NULL); 
-    scanf("%d", &a);
-    int re = calculate(a);
-    
-    cout << re << endl;
-    
-
+    int T = 0;;
+    scanf("%d",&T);
+    if(T < 0 || T > 1000) return -1;
+    for(int i = 0 ; i < T ; i++)
+    {
+        scanf("%d %d", &a, &b);
+        if(a < 1 || a > 100 ) a = 0 ;
+        else if( b < 1 || b > 64) b = 0;
+        int rank1 = 0, rank2 = 0;
+        
+        for(int j = 1 ; a > 0 ; j++)
+        {
+            if( (a = a - j) < 1 ) 
+            {
+                rank1 = j;
+                break;
+            }
+        }
+        for(int j = 1 ; b > 0 ; j++)
+        {
+            if( (b = b - pow(2,j-1)) < 1 )
+            {
+                rank2 = j;
+                break;
+            } 
+        }        
+        result[i] = _2017[rank1]+_2018[rank2];
+    }
+    for(int i = 0 ; i < T; i++)
+    {
+       cout << result[i] << '\n';
+    }
 }
