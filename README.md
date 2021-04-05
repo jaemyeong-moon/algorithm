@@ -11,3 +11,5 @@
 5. baekjoon 2839, 최대공약수 응용
 6. baekjoon 카카오 예선 1번 문제. (노가다)
 7. baekjoon 1850 / 최대공약수 문제
+8. baekjoon 10451 / 순열 사이클
+9. baekjoon 1202 / 보석넣기 문제 / priority_queue 사용, sort 사용 등. 
