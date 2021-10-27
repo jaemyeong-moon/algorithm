@@ -13,4 +13,5 @@
 7. baekjoon 1850 / 최대공약수 문제
 8. baekjoon 10451 / 순열 사이클
 9. baekjoon 1202 / 보석넣기 문제 / priority_queue 사용, sort 사용 등. 
-10. codility / Time complexity - TapeEquilibrium
+10. codility / Time complexity - TapeEquilibrium  - java 
+11. baekjoon 15486
