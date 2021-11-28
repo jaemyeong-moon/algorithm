@@ -1,29 +1,25 @@
-/* https://www.acmicpc.net/problem/15486 */
-import java.util.*;
-class Main{
-    public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
-        String enter = sc.next();
-        int N = Integer.parseInt(enter);
-        int T[] = new int[N+2];
-        int P[] = new int[N+2];
-        int dp[] = new int[N+2];
-        
-        
-        for(int i = 1; i <= N ; i++){
-            enter = sc.next();
-            T[i] = Integer.parseInt(enter);
-            enter = sc.next();
-            P[i] = Integer.parseInt(enter);
+// https://programmers.co.kr/learn/courses/30/lessons/43162
+class Solution {
+    public int solution(int n, int[][] computers) {
+        int answer = 0;
+        boolean check[] = new boolean[n];
+        for(int i = 0 ; i < n ; i++){
+            if(check[i]) continue;
+            if(network(n, computers, check, i)) answer++;
         }
-        for(int i = N; i >= 1 ; i--){
-            if((i-1)+T[i] > N){
-                dp[i] = dp[i+1];
-            }
-            else{
-                dp[i] = dp[i+1] > P[i] + dp[i + T[i]] ? dp[i+1] : P[i] + dp[i + T[i]];
-            }
-        }
-        System.out.println(dp[1]);
+        return answer;
     }
+    public boolean network(int n, int[][] computers, boolean check[], int pos ){
+        boolean ret = false;
+        for(int i = 0; i < n ; i++){
+            if(!check[i] && computers[pos][i] == 1) {
+                check[i] = ret = true;
+                if(pos != i)
+                    network(n, computers, check, i);
+            }
+        }
+        return ret;
+    }
+    
+    
 }
