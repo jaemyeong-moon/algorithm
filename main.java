@@ -1,25 +1,21 @@
-// https://programmers.co.kr/learn/courses/30/lessons/43162
+//https://programmers.co.kr/learn/courses/30/lessons/43165
 class Solution {
-    public int solution(int n, int[][] computers) {
-        int answer = 0;
-        boolean check[] = new boolean[n];
-        for(int i = 0 ; i < n ; i++){
-            if(check[i]) continue;
-            if(network(n, computers, check, i)) answer++;
-        }
+    int answer = 0;
+    public int solution(int[] numbers, int target) {
+        dfs(numbers, target, 0, 0);
         return answer;
     }
-    public boolean network(int n, int[][] computers, boolean check[], int pos ){
-        boolean ret = false;
-        for(int i = 0; i < n ; i++){
-            if(!check[i] && computers[pos][i] == 1) {
-                check[i] = ret = true;
-                if(pos != i)
-                    network(n, computers, check, i);
-            }
+    public void dfs(int[] numbers, int target, int sum, int pos){
+        if(numbers.length == pos){
+            if(sum == target) answer++;
+            return ;
         }
-        return ret;
+        
+        sum += numbers[pos];
+        dfs(numbers, target, sum, pos+1);
+        sum -= numbers[pos] ;
+        
+        sum += numbers[pos]*(-1);
+        dfs(numbers, target, sum, pos+1);
     }
-    
-    
 }
